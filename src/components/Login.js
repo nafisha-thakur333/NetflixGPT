@@ -6,11 +6,11 @@ import {auth} from "../utils/firebase"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVATAR, Netflix_BG_IMG } from '../utils/constants';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, seterrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const toggleSignInForm = () => {
@@ -40,7 +40,7 @@ const Login = () => {
 
             //update user
             updateProfile(user, {
-                displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/49334348?v=4"
+                displayName: name.current.value, photoURL: USER_AVATAR
               }).then(() => {
                 const {uid, email, displayName, photoURL} = auth.currentUser;
                 dispatch(
@@ -51,12 +51,9 @@ const Login = () => {
                         photoURL : photoURL
                     })
                 );
-                navigate("/browse");
               }).catch((error) => {
                seterrorMessage(error.message);
               });
-            console.log(user);
-            
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -72,8 +69,6 @@ const Login = () => {
         .then((userCredential) => {
             // Sign in 
             const user = userCredential.user;
-            console.log(user);
-            navigate("/browse"); //navigate to main page
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -87,7 +82,7 @@ const Login = () => {
     <div>
      <Header/>
      <div className='absolute'>
-     <img src="https://assets.nflxext.com/ffe/siteui/vlv3/826348c2-cdcb-42a0-bc11-a788478ba5a2/6d20b198-e7ab-4e9f-a1aa-666faa0298f9/IN-en-20240729-POP_SIGNUP_TWO_WEEKS-perspective_WEB_a67d8c9e-8121-4a74-98e4-8005eb2df227_large.jpg"
+     <img src={Netflix_BG_IMG}
       alt="logo"/>
     </div>
 
